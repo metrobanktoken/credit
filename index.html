@@ -8,113 +8,796 @@
     <meta name="depo-analytics-status" content="active" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="icon" href="https://raw.githubusercontent.com/metrobanktoken/credit/refs/heads/main/credit_logo.jpg" type="image/jpeg" />
     <style>
-        /* ===== ПОЛНОСТЬЮ КОПИРУЕМ ВЕСЬ CSS ИЗ DEPO index.html ===== */
-        /* (здесь должен быть весь CSS из DEPO index.html, но с заменой цветовой схемы на платиново-синюю, если нужно) */
-        /* Для экономии места — в реальном файле вставь полный CSS из DEPO */
-        /* Я вставляю сокращённую версию, но в финальном коде используй полный CSS */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0e17; color: #eef2f8; overflow-x: hidden; position: relative; min-height: 100vh; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0e17; }
-        ::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 10px; }
-        .ticker-top { background: #111a2e; border-bottom: 1px solid #60a5fa33; padding: 6px 0; overflow: hidden; white-space: nowrap; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; font-size: 0.8rem; color: #8b95b0; }
-        .ticker-top .ticker-content { display: inline-block; animation: scrollTicker 30s linear infinite; }
-        .ticker-top .ticker-content span { margin: 0 24px; }
-        .ticker-top .ticker-content .highlight { color: #60a5fa; font-weight: 600; }
-        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .ticker-bottom { background: #0d1522; border-top: 1px solid #60a5fa22; padding: 6px 0; overflow: hidden; white-space: nowrap; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000; font-size: 0.75rem; color: #6a7a99; }
-        .ticker-bottom .ticker-content { display: inline-block; animation: scrollTickerReverse 35s linear infinite; }
-        .ticker-bottom .ticker-content span { margin: 0 20px; }
-        .ticker-bottom .ticker-content .gold { color: #60a5fa; }
-        @keyframes scrollTickerReverse { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-        .floating-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .floating-bg .item { position: absolute; font-size: 2rem; opacity: 0.06; animation: floatItem linear infinite; will-change: transform; }
-        .floating-bg .item.glow { filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.3)); }
-        @keyframes floatItem { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0.03; } 20% { opacity: 0.08; } 80% { opacity: 0.08; } 100% { transform: translateY(-10vh) rotate(720deg) scale(1.2); opacity: 0.01; } }
-        .neon-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .neon-lines .line { position: absolute; width: 200%; height: 2px; background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, #60a5fa, transparent); filter: blur(3px); animation: neonMove 8s linear infinite; opacity: 0.3; }
-        .neon-lines .line:nth-child(1) { top: 15%; animation-duration: 10s; }
-        .neon-lines .line:nth-child(2) { top: 40%; animation-duration: 7s; animation-delay: 2s; background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent); }
-        .neon-lines .line:nth-child(3) { top: 65%; animation-duration: 12s; animation-delay: 4s; }
-        .neon-lines .line:nth-child(4) { top: 85%; animation-duration: 9s; animation-delay: 1s; }
-        @keyframes neonMove { 0% { transform: translateX(-50%) scaleX(1); opacity: 0.2; } 50% { opacity: 0.6; } 100% { transform: translateX(50%) scaleX(0.8); opacity: 0.1; } }
-        .container { max-width: 1200px; margin: 0 auto; padding: 80px 24px 60px; position: relative; z-index: 1; }
-        .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 16px 0; border-bottom: 1px solid #1e2a42; margin-bottom: 40px; }
-        .header .logo { display: flex; align-items: center; gap: 12px; }
-        .header .logo img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #60a5fa55; }
-        .header .logo h1 { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .header .nav { display: flex; gap: 20px; flex-wrap: wrap; }
-        .header .nav a { color: #8b95b0; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: 0.2s; padding: 6px 12px; border-radius: 8px; }
-        .header .nav a:hover, .header .nav a.active { color: #60a5fa; background: #1a2236; }
-        .header .nav .token-link { border: 1px solid #2a3450; border-radius: 20px; padding: 4px 16px; font-size: 0.75rem; color: #cbd5e1; }
-        .header .nav .token-link:hover { border-color: #60a5fa; color: #60a5fa; background: transparent; }
-        .lang-switch { display: flex; gap: 4px; flex-wrap: wrap; }
-        .lang-switch button { background: transparent; border: none; color: #5a6680; font-size: 0.7rem; cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: 0.2s; font-weight: 600; }
-        .lang-switch button:hover, .lang-switch button.active { color: #60a5fa; background: #1a2236; }
-        .hero { text-align: center; padding: 40px 0 30px; }
-        .hero .badge { display: inline-block; background: #1a2236; padding: 4px 20px; border-radius: 40px; font-size: 0.75rem; color: #60a5fa; border: 1px solid #60a5fa33; margin-bottom: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        .hero h2 { font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
-        .hero h2 span { background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .hero .sub { font-size: 1.2rem; color: #8b95b0; max-width: 640px; margin: 0 auto 20px; }
-        .hero .stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px 48px; margin: 20px 0 30px; }
-        .hero .stats .stat { text-align: center; }
-        .hero .stats .stat .num { font-size: 1.8rem; font-weight: 700; color: #60a5fa; }
-        .hero .stats .stat .label { font-size: 0.8rem; color: #6a7a99; text-transform: uppercase; letter-spacing: 0.5px; }
-        .hero .btn-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
-        .btn-primary { background: #60a5fa; color: #0a0e17; padding: 14px 36px; border: none; border-radius: 60px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; text-decoration: none; display: inline-block; }
-        .btn-primary:hover { background: #3b82f6; transform: scale(1.02); box-shadow: 0 0 40px #60a5fa44; }
-        .btn-outline { background: transparent; color: #60a5fa; padding: 14px 36px; border: 1px solid #60a5fa; border-radius: 60px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; text-decoration: none; display: inline-block; }
-        .btn-outline:hover { background: #60a5fa22; transform: scale(1.02); }
-        .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin: 50px 0 30px; }
-        .section-title span { color: #60a5fa; }
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 20px 0 40px; }
-        .card { background: #111a2e; border-radius: 24px; padding: 28px 24px; border: 1px solid #1e2a42; transition: 0.3s; position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-6px); border-color: #60a5fa66; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); }
-        .card .icon { font-size: 2.4rem; margin-bottom: 12px; }
-        .card .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
-        .card .card-title .highlight { color: #60a5fa; }
-        .card .desc { color: #a8b3cf; font-size: 0.95rem; margin: 8px 0 16px; }
-        .card .pill { display: inline-block; background: #1a2236; padding: 4px 16px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #60a5fa; margin: 4px 4px 0 0; }
-        .card .pill.green { color: #4ade80; background: #1a2e2a; }
-        .card .pill.blue { color: #60a5fa; background: #1a263a; }
-        .table-wrap { background: #111a2e; border-radius: 20px; padding: 8px 0; border: 1px solid #1e2a42; overflow-x: auto; margin: 20px 0 40px; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 500px; }
-        th { text-align: left; padding: 14px 20px; color: #6a7a99; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e2a42; }
-        td { padding: 12px 20px; border-bottom: 1px solid #0d1522; }
-        tr:last-child td { border-bottom: none; }
-        .highlight { color: #60a5fa; font-weight: 700; }
-        .counters { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px 60px; padding: 30px 0; border-top: 1px solid #1e2a42; margin-top: 40px; }
-        .counters .counter-item { text-align: center; }
-        .counters .counter-item .num { font-size: 2.4rem; font-weight: 800; color: #60a5fa; }
-        .counters .counter-item .label { font-size: 0.8rem; color: #6a7a99; text-transform: uppercase; letter-spacing: 0.5px; }
-        .pool-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
-        .pool-link { background: #111a2e; padding: 10px 24px; border-radius: 40px; border: 1px solid #2a3450; color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-        .pool-link:hover { border-color: #60a5fa; color: #60a5fa; background: #1a2236; }
-        .pool-link .arrow { color: #60a5fa; }
-        .credit-form { background: #111a2e; border-radius: 24px; padding: 32px; border: 1px solid #1e2a42; margin: 30px 0; }
-        .credit-form .form-group { margin-bottom: 18px; }
-        .credit-form label { display: block; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; font-size: 0.9rem; }
-        .credit-form input, .credit-form select, .credit-form textarea { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #2a3450; background: #0d1522; color: #eef2f8; font-size: 0.95rem; font-family: 'Inter', sans-serif; transition: 0.2s; }
-        .credit-form input:focus, .credit-form select:focus, .credit-form textarea:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px #60a5fa22; }
-        .credit-form .hash-field { background: #0a0e17; border-color: #60a5fa44; font-family: monospace; font-size: 0.85rem; }
-        .credit-form .hash-field::placeholder { color: #5a6680; }
-        .credit-form .btn-submit { background: #60a5fa; color: #0a0e17; padding: 14px 40px; border: none; border-radius: 60px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; width: 100%; }
-        .credit-form .btn-submit:hover { background: #3b82f6; box-shadow: 0 0 40px #60a5fa44; }
-        .credit-form .note { font-size: 0.8rem; color: #6a7a99; margin-top: 12px; text-align: center; }
-        .credit-form .note .gold { color: #60a5fa; }
-        .footer { text-align: center; padding: 30px 0 40px; border-top: 1px solid #1e2a42; margin-top: 30px; color: #5a6680; font-size: 0.85rem; }
-        .footer .links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 24px; margin: 12px 0; }
-        .footer .links a { color: #8b95b0; text-decoration: none; transition: 0.2s; }
-        .footer .links a:hover { color: #60a5fa; }
-        @media (max-width: 700px) { .header { flex-direction: column; align-items: stretch; gap: 12px; } .header .nav { justify-content: center; } .hero h2 { font-size: 2.2rem; } .section-title { font-size: 1.5rem; } .counters { gap: 20px; } .counters .counter-item .num { font-size: 1.8rem; } .ticker-top .ticker-content, .ticker-bottom .ticker-content { font-size: 0.65rem; } .floating-bg .item { font-size: 1.2rem !important; } }
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e17;
+            color: #eef2f8;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0e17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 10px;
+        }
+
+        /* ===== TICKER TOP ===== */
+        .ticker-top {
+            background: #111a2e;
+            border-bottom: 1px solid #60a5fa33;
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            font-size: 0.8rem;
+            color: #8b95b0;
+        }
+        .ticker-top .ticker-content {
+            display: inline-block;
+            animation: scrollTicker 30s linear infinite;
+        }
+        .ticker-top .ticker-content span {
+            margin: 0 24px;
+        }
+        .ticker-top .ticker-content .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        @keyframes scrollTicker {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ===== TICKER BOTTOM ===== */
+        .ticker-bottom {
+            background: #0d1522;
+            border-top: 1px solid #60a5fa22;
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            font-size: 0.75rem;
+            color: #6a7a99;
+        }
+        .ticker-bottom .ticker-content {
+            display: inline-block;
+            animation: scrollTickerReverse 35s linear infinite;
+        }
+        .ticker-bottom .ticker-content span {
+            margin: 0 20px;
+        }
+        .ticker-bottom .ticker-content .gold {
+            color: #60a5fa;
+        }
+        @keyframes scrollTickerReverse {
+            0% {
+                transform: translateX(-50%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== ФОНОВЫЕ ЛЕТАЮЩИЕ ПРЕДМЕТЫ ===== */
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .floating-bg .item {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.06;
+            animation: floatItem linear infinite;
+            will-change: transform;
+        }
+        .floating-bg .item.glow {
+            filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.3));
+        }
+        @keyframes floatItem {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0.03;
+            }
+            20% {
+                opacity: 0.08;
+            }
+            80% {
+                opacity: 0.08;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1.2);
+                opacity: 0.01;
+            }
+        }
+
+        /* ===== НЕОНОВЫЕ ЛИНИИ ===== */
+        .neon-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .neon-lines .line {
+            position: absolute;
+            width: 200%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, #60a5fa, transparent);
+            filter: blur(3px);
+            animation: neonMove 8s linear infinite;
+            opacity: 0.3;
+        }
+        .neon-lines .line:nth-child(1) {
+            top: 15%;
+            animation-duration: 10s;
+        }
+        .neon-lines .line:nth-child(2) {
+            top: 40%;
+            animation-duration: 7s;
+            animation-delay: 2s;
+            background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent);
+        }
+        .neon-lines .line:nth-child(3) {
+            top: 65%;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+        .neon-lines .line:nth-child(4) {
+            top: 85%;
+            animation-duration: 9s;
+            animation-delay: 1s;
+        }
+        @keyframes neonMove {
+            0% {
+                transform: translateX(-50%) scaleX(1);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(50%) scaleX(0.8);
+                opacity: 0.1;
+            }
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e2a42;
+            margin-bottom: 40px;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #60a5fa55;
+        }
+        .header .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .header .nav a {
+            color: #8b95b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+        .header .nav a:hover,
+        .header .nav a.active {
+            color: #60a5fa;
+            background: #1a2236;
+        }
+        .header .nav .token-link {
+            border: 1px solid #2a3450;
+            border-radius: 20px;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+        }
+        .header .nav .token-link:hover {
+            border-color: #60a5fa;
+            color: #60a5fa;
+            background: transparent;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .lang-switch button {
+            background: transparent;
+            border: none;
+            color: #5a6680;
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+        .lang-switch button:hover,
+        .lang-switch button.active {
+            color: #60a5fa;
+            background: #1a2236;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 30px 0 20px;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: #1a2236;
+            padding: 4px 20px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            color: #60a5fa;
+            border: 1px solid #60a5fa33;
+            margin-bottom: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero h2 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+        .hero h2 span {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .slogan {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #60a5fa;
+            margin: 6px 0 8px;
+            text-shadow: 0 0 40px rgba(96, 165, 250, 0.15);
+        }
+        .hero .slogan .highlight-amount {
+            color: #ffffff;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            padding: 2px 12px;
+            border-radius: 8px;
+            font-weight: 900;
+        }
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #8b95b0;
+            max-width: 640px;
+            margin: 0 auto 12px;
+        }
+        .hero .leverage-badge {
+            display: inline-block;
+            background: #1a2236;
+            padding: 6px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #60a5fa;
+            border: 1px solid #60a5fa44;
+            margin-bottom: 20px;
+        }
+        .hero .leverage-badge span {
+            color: #ffffff;
+        }
+        .hero .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 24px 48px;
+            margin: 16px 0 24px;
+        }
+        .hero .stats .stat {
+            text-align: center;
+        }
+        .hero .stats .stat .num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+        .hero .stats .stat .label {
+            font-size: 0.75rem;
+            color: #6a7a99;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hero .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .btn-primary {
+            background: #60a5fa;
+            color: #0a0e17;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background: #3b82f6;
+            transform: scale(1.02);
+            box-shadow: 0 0 40px #60a5fa44;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #60a5fa;
+            padding: 14px 36px;
+            border: 1px solid #60a5fa;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-outline:hover {
+            background: #60a5fa22;
+            transform: scale(1.02);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #8b95b0;
+            padding: 14px 36px;
+            border: 1px solid #2a3450;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-secondary:hover {
+            border-color: #60a5fa;
+            color: #60a5fa;
+        }
+
+        /* ===== CARDS ===== */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+        .section-title span {
+            color: #60a5fa;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 20px 0 40px;
+        }
+        .card {
+            background: #111a2e;
+            border-radius: 24px;
+            padding: 28px 24px;
+            border: 1px solid #1e2a42;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #60a5fa66;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+        }
+        .card .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .card .card-title .highlight {
+            color: #60a5fa;
+        }
+        .card .desc {
+            color: #a8b3cf;
+            font-size: 0.95rem;
+            margin: 8px 0 16px;
+        }
+        .card .pill {
+            display: inline-block;
+            background: #1a2236;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #60a5fa;
+            margin: 4px 4px 0 0;
+        }
+        .card .pill.green {
+            color: #4ade80;
+            background: #1a2e2a;
+        }
+        .card .pill.blue {
+            color: #60a5fa;
+            background: #1a263a;
+        }
+        .card .pill.gold {
+            color: #f0b90b;
+            background: #1a241a;
+        }
+        .card.border-blue {
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* ===== TABLE ===== */
+        .table-wrap {
+            background: #111a2e;
+            border-radius: 20px;
+            padding: 8px 0;
+            border: 1px solid #1e2a42;
+            overflow-x: auto;
+            margin: 20px 0 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+        }
+        th {
+            text-align: left;
+            padding: 14px 20px;
+            color: #6a7a99;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #1e2a42;
+        }
+        td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #0d1522;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .highlight {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        /* ===== CALCULATOR ===== */
+        .calculator {
+            background: #111a2e;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid #1e2a42;
+            margin: 20px auto 40px;
+            max-width: 600px;
+        }
+        .calculator .calc-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+        .calculator .calc-row label {
+            font-weight: 600;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .calculator .calc-row input,
+        .calculator .calc-row select {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #2a3450;
+            background: #0d1522;
+            color: #eef2f8;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .calculator .calc-row input:focus,
+        .calculator .calc-row select:focus {
+            outline: none;
+            border-color: #60a5fa;
+        }
+        .calculator .calc-result {
+            background: #0d1522;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 16px;
+            text-align: center;
+            border: 1px solid #1e2a42;
+        }
+        .calculator .calc-result .big {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #60a5fa;
+        }
+        .calculator .calc-result .label {
+            font-size: 0.8rem;
+            color: #6a7a99;
+        }
+        .calculator .calc-result .sub-detail {
+            font-size: 0.85rem;
+            color: #8b95b0;
+            margin-top: 4px;
+        }
+        .calculator .calc-result .highlight-amount {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        /* ===== CREDIT FORM ===== */
+        .credit-form {
+            background: #111a2e;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid #1e2a42;
+            margin: 30px 0;
+        }
+        .credit-form .form-group {
+            margin-bottom: 18px;
+        }
+        .credit-form label {
+            display: block;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+        .credit-form input,
+        .credit-form select,
+        .credit-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #2a3450;
+            background: #0d1522;
+            color: #eef2f8;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+        }
+        .credit-form input:focus,
+        .credit-form select:focus,
+        .credit-form textarea:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px #60a5fa22;
+        }
+        .credit-form .hash-field {
+            background: #0a0e17;
+            border-color: #60a5fa44;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        .credit-form .hash-field::placeholder {
+            color: #5a6680;
+        }
+        .credit-form .btn-submit {
+            background: #60a5fa;
+            color: #0a0e17;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .credit-form .btn-submit:hover {
+            background: #3b82f6;
+            box-shadow: 0 0 40px #60a5fa44;
+        }
+        .credit-form .note {
+            font-size: 0.8rem;
+            color: #6a7a99;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .credit-form .note .gold {
+            color: #60a5fa;
+        }
+
+        /* ===== COUNTERS ===== */
+        .counters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px 60px;
+            padding: 30px 0;
+            border-top: 1px solid #1e2a42;
+            margin-top: 40px;
+        }
+        .counters .counter-item {
+            text-align: center;
+        }
+        .counters .counter-item .num {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #60a5fa;
+        }
+        .counters .counter-item .label {
+            font-size: 0.8rem;
+            color: #6a7a99;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== POOL LINKS ===== */
+        .pool-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .pool-link {
+            background: #111a2e;
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: 1px solid #2a3450;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pool-link:hover {
+            border-color: #60a5fa;
+            color: #60a5fa;
+            background: #1a2236;
+        }
+        .pool-link .arrow {
+            color: #60a5fa;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-top: 1px solid #1e2a42;
+            margin-top: 30px;
+            color: #5a6680;
+            font-size: 0.85rem;
+        }
+        .footer .links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            margin: 12px 0;
+        }
+        .footer .links a {
+            color: #8b95b0;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer .links a:hover {
+            color: #60a5fa;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .header .nav {
+                justify-content: center;
+            }
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            .hero .slogan {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .counters {
+                gap: 20px;
+            }
+            .counters .counter-item .num {
+                font-size: 1.8rem;
+            }
+            .ticker-top .ticker-content,
+            .ticker-bottom .ticker-content {
+                font-size: 0.65rem;
+            }
+            .floating-bg .item {
+                font-size: 1.2rem !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- TICKER TOP -->
+    <!-- ===== ВЕРХНЯЯ БЕГУЩАЯ СТРОКА ===== -->
     <div class="ticker-top">
         <div class="ticker-content">
             <span>🚀 <span class="highlight">$CREDIT</span> $0.01</span>
@@ -132,7 +815,7 @@
         </div>
     </div>
 
-    <!-- TICKER BOTTOM -->
+    <!-- ===== НИЖНЯЯ БЕГУЩАЯ СТРОКА ===== -->
     <div class="ticker-bottom">
         <div class="ticker-content">
             <span>📋 <span class="gold">$CREDIT</span> 36% APR · 15 days approval · 10 days disbursement</span>
@@ -146,10 +829,10 @@
         </div>
     </div>
 
-    <!-- FLOATING BG -->
+    <!-- ===== ФОНОВЫЕ ЛЕТАЮЩИЕ ПРЕДМЕТЫ ===== -->
     <div class="floating-bg" id="floatingBg"></div>
 
-    <!-- NEON LINES -->
+    <!-- ===== НЕОНОВЫЕ ЛИНИИ ===== -->
     <div class="neon-lines">
         <div class="line"></div>
         <div class="line"></div>
@@ -157,7 +840,7 @@
         <div class="line"></div>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- ===== MAIN CONTENT ===== -->
     <div class="container">
 
         <!-- HEADER -->
@@ -188,11 +871,19 @@
             </div>
         </header>
 
-        <!-- HERO -->
+        <!-- ===== HERO ===== -->
         <section class="hero">
             <div class="badge">🚀 Token-2022 · Solana</div>
             <h2><span>CREDIT</span> Token</h2>
-            <p class="sub">Interest-bearing lending token. Borrow against $DEPO collateral with tiered APR: 36%, 18%, or 5%.</p>
+            <div class="slogan">
+                Borrow <span class="highlight-amount">$100k</span> — secure with <span class="highlight-amount">$50k</span> in $DEPO.
+            </div>
+            <div class="leverage-badge">
+                ⚡ <span>2× leverage</span> · Interest-bearing · 36% / 18% / 5% APR
+            </div>
+            <p class="sub">
+                Interest-bearing lending token. Borrow against $DEPO collateral with tiered APR: 36%, 18%, or 5%. Fast approval up to 30 days.
+            </p>
             <div class="stats">
                 <div class="stat"><div class="num">$0.01</div><div class="label">Price</div></div>
                 <div class="stat"><div class="num">999T</div><div class="label">Supply</div></div>
@@ -202,10 +893,77 @@
             <div class="btn-group">
                 <a href="#apply" class="btn-primary">Get a Loan</a>
                 <a href="https://www.geckoterminal.com/solana/pools/HfpGf7LBALkLgaDtVcs5gi4SPejozrKz4vCDDNZgZURb" target="_blank" class="btn-outline">Trade $CREDIT →</a>
+                <a href="#collateral" class="btn-secondary">How it works ↓</a>
             </div>
         </section>
 
-        <!-- CARDS: TIERS -->
+        <!-- ===== HOW COLLATERAL WORKS ===== -->
+        <h2 class="section-title" id="collateral">How <span>Collateral Works</span></h2>
+        <div class="cards">
+            <div class="card border-blue">
+                <div class="icon">🏠</div>
+                <div class="card-title">Option 1: Sell Asset → Buy $DEPO</div>
+                <div class="desc">
+                    <strong>Example:</strong> Sell apartment for <span class="highlight">$100k</span> → buy $DEPO → get <span class="highlight">$200k</span> credit (2× leverage).
+                </div>
+                <span class="pill">2× leverage</span>
+                <span class="pill green">100% coverage</span>
+            </div>
+
+            <div class="card border-blue">
+                <div class="icon">🔐</div>
+                <div class="card-title">Option 2: Pledge Asset → Get $DEPO</div>
+                <div class="desc">
+                    <strong>Example:</strong> Pledge apartment ($100k) → get <span class="highlight">$60k</span> $DEPO (60% LTV) → get <span class="highlight">$120k</span> credit.
+                </div>
+                <span class="pill">60% LTV</span>
+                <span class="pill blue">Real estate</span>
+            </div>
+
+            <div class="card border-blue">
+                <div class="icon">💳</div>
+                <div class="card-title">Option 3: Buy $DEPO on DEX</div>
+                <div class="desc">
+                    <strong>Example:</strong> Buy <span class="highlight">500,000 $DEPO ($5,000)</span> on Meteora → get <span class="highlight">$10,000</span> credit (2× leverage).
+                    <br><br>
+                    Higher coverage = lower APR (36% → 18% → 5%).
+                </div>
+                <span class="pill">From $5,000</span>
+                <span class="pill blue">2× leverage</span>
+            </div>
+        </div>
+
+        <!-- ===== COLLATERAL CALCULATOR ===== -->
+        <div class="calculator">
+            <h3 style="text-align:center; color:#60a5fa; margin-bottom:16px;">⚡ Collateral Calculator</h3>
+            <p style="text-align:center; color:#8b95b0; font-size:0.9rem; margin-bottom:16px;">
+                Enter your $DEPO amount to see how much credit you can get (2× leverage)
+            </p>
+            <div class="calc-row">
+                <label for="collateralAmount">Your $DEPO Amount (USD)</label>
+                <input type="number" id="collateralAmount" value="50000" min="100" step="1000" />
+            </div>
+            <div class="calc-row">
+                <label for="loanType">Loan Type</label>
+                <select id="loanType">
+                    <option value="credit">$CREDIT (36% APR)</option>
+                    <option value="ajr">$AJR (0% APR)</option>
+                </select>
+            </div>
+            <button class="btn-primary" id="collateralCalcBtn" style="width:100%;">Calculate Max Credit</button>
+            <div class="calc-result" id="collateralResult">
+                <div class="label">You can get up to</div>
+                <div class="big" id="maxCredit">$100,000</div>
+                <div class="sub-detail">
+                    <span id="loanDetails">2× leverage · 36% APR · 15 days approval · 10 days disbursement</span>
+                </div>
+                <div style="font-size:0.8rem; color:#6a7a99; margin-top:8px;">
+                    🚀 Buy <span class="highlight-amount">$50k</span> $DEPO → get <span class="highlight-amount">$100k</span> credit
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== APR TIERS CARDS ===== -->
         <h2 class="section-title">Choose Your <span>Rate</span></h2>
         <div class="cards">
             <div class="card">
@@ -227,11 +985,11 @@
                 <div class="card-title">5% APR</div>
                 <div class="desc">Lowest rate. <strong>400%</strong> $DEPO coverage required. Processing: <strong>30 days</strong>, disbursement: <strong>20 days</strong>.</div>
                 <span class="pill">400% coverage</span>
-                <span class="pill">Best value</span>
+                <span class="pill gold">Best value</span>
             </div>
         </div>
 
-        <!-- TABLE -->
+        <!-- ===== TABLE ===== -->
         <h2 class="section-title">Detailed <span>Terms</span></h2>
         <div class="table-wrap">
             <table>
@@ -246,17 +1004,51 @@
             </table>
         </div>
 
-        <!-- CREDIT FORM -->
-        <h2 class="section-title" id="apply">Apply for <span>Credit</span></h2>
+        <!-- ===== CREDIT APPLICATION FORM ===== -->
+        <h2 class="section-title" id="apply">Apply for a <span>Credit</span></h2>
         <div class="credit-form">
-            <form id="creditForm">
+            <form id="creditForm" action="https://formspree.io/f/xrpglyko" method="POST">
+                <!-- Скрытые поля для Formspree -->
+                <input type="hidden" name="_subject" value="📩 New CREDIT Application" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_format" value="plain" />
+
+                <!-- Сумма кредита -->
                 <div class="form-group">
                     <label for="loanAmount">Loan Amount (USD)</label>
-                    <input type="number" id="loanAmount" placeholder="e.g. 100000" min="1000" required />
+                    <input type="number" id="loanAmount" name="Loan Amount" placeholder="e.g. 50000" min="5000" required />
                 </div>
+
+                <!-- Авторасчёт залога -->
+                <div class="form-group" style="background: #0d1522; padding: 16px; border-radius: 12px; border: 1px solid #2a3450;">
+                    <label style="color: #cbd5e1;">Required Collateral (auto-calculated)</label>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 8px 0; border-bottom: 1px solid #1a2236;">
+                        <span style="color: #8b95b0; font-size: 0.85rem;">💰 In USD</span>
+                        <span style="font-size: 1.4rem; font-weight: 800; color: #60a5fa;" id="collateralUsd">$25,000</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 8px 0;">
+                        <span style="color: #8b95b0; font-size: 0.85rem;">🪙 In $DEPO tokens</span>
+                        <span style="font-size: 1.4rem; font-weight: 800; color: #ffffff;" id="collateralDepo">2,500,000</span>
+                    </div>
+                    
+                    <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
+                        <a href="#" id="swapDepoBtn" class="btn-outline" style="padding: 8px 20px; font-size: 0.8rem; text-decoration: none;">Swap to $DEPO →</a>
+                    </div>
+                    
+                    <div style="font-size: 0.75rem; color: #6a7a99; margin-top: 8px;">
+                        ⚡ 2× leverage: you need <strong>50%</strong> of loan amount in $DEPO collateral
+                    </div>
+                    
+                    <input type="hidden" id="collateralUsdHidden" name="Collateral USD" value="25,000" />
+                    <input type="hidden" id="collateralDepoHidden" name="Collateral DEPO" value="2,500,000" />
+                </div>
+
+                <!-- Срок и цель -->
                 <div class="form-group">
                     <label for="loanTerm">Term (months)</label>
-                    <select id="loanTerm">
+                    <select id="loanTerm" name="Term">
                         <option value="12">12 months</option>
                         <option value="24">24 months</option>
                         <option value="36" selected>36 months</option>
@@ -266,37 +1058,50 @@
                 </div>
                 <div class="form-group">
                     <label for="loanPurpose">Purpose</label>
-                    <select id="loanPurpose">
-                        <option value="business">Business</option>
-                        <option value="personal">Personal</option>
-                        <option value="mortgage">Mortgage</option>
-                        <option value="auto">Auto</option>
-                        <option value="refinance">Refinance</option>
-                        <option value="other">Other</option>
+                    <select id="loanPurpose" name="Purpose">
+                        <option value="Business">Business</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Mortgage">Mortgage</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Refinance">Refinance</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
+
+                <!-- Email клиента -->
                 <div class="form-group">
-                    <label for="walletHash">Your Solana Wallet Hash <span style="color:#60a5fa;">*</span></label>
-                    <input type="text" id="walletHash" class="hash-field" placeholder="Enter your Solana wallet address (required)" required />
+                    <label for="userEmail">Your Email</label>
+                    <input type="email" id="userEmail" name="Client Email" placeholder="your@email.com" required />
                 </div>
-                <div class="form-group">
-                    <label for="tokenBalance">DEPO Token Balance (minimum 10,000 required)</label>
-                    <input type="number" id="tokenBalance" placeholder="e.g. 50000" min="10000" required />
+
+                <!-- Кошелёк (скрытое поле) -->
+                <input type="hidden" id="walletHash" name="Wallet Address" value="" />
+
+                <!-- Статус подключения кошелька -->
+                <div class="form-group" id="walletStatus">
+                    <label>Wallet Connection</label>
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #0d1522; border-radius: 12px; border: 1px solid #2a3450;">
+                        <span id="walletIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: #ff6b6b; display: inline-block;"></span>
+                        <span id="walletAddress" style="color: #8b95b0; font-family: monospace; font-size: 0.85rem;">Not connected</span>
+                        <button type="button" id="connectWalletBtn" class="btn-primary" style="padding: 6px 20px; font-size: 0.8rem; margin-left: auto;">Connect Phantom</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn-submit">Submit Application</button>
-                <div class="note">⚠️ Application requires a valid Solana wallet with a minimum of <span class="gold">10,000 $DEPO</span>. Balance will be verified on-chain.</div>
+
+                <!-- Кнопка отправки -->
+                <button type="submit" class="btn-submit" id="submitBtn" disabled>Connect wallet to apply</button>
+                <div class="note">⚠️ Wallet connection required. Your $DEPO balance will be verified on-chain.</div>
             </form>
-            <div id="formStatus" style="margin-top:16px; text-align:center; font-weight:600; color:#4ade80;"></div>
+            <div id="formStatus" style="margin-top:16px; text-align:center; font-weight:600;"></div>
         </div>
 
-        <!-- POOL LINKS -->
+        <!-- ===== POOL LINKS ===== -->
         <div class="pool-links">
             <a href="https://www.geckoterminal.com/solana/pools/HfpGf7LBALkLgaDtVcs5gi4SPejozrKz4vCDDNZgZURb" target="_blank" class="pool-link">$CREDIT / USDC <span class="arrow">→</span></a>
             <a href="https://metrobanktoken.github.io/depo" target="_blank" class="pool-link">$DEPO Token <span class="arrow">→</span></a>
             <a href="https://metrobanktoken.github.io/ajr" target="_blank" class="pool-link">$AJR Token <span class="arrow">→</span></a>
         </div>
 
-        <!-- COUNTERS -->
+        <!-- ===== COUNTERS ===== -->
         <div class="counters">
             <div class="counter-item">
                 <div class="num" id="visitorCount">12,000</div>
@@ -308,7 +1113,7 @@
             </div>
         </div>
 
-        <!-- FOOTER -->
+        <!-- ===== FOOTER ===== -->
         <footer class="footer">
             <div class="links">
                 <a href="https://metrobanktoken.github.io/depo">$DEPO</a>
@@ -435,6 +1240,157 @@
             };
         })();
 
+        // ===== АВТОРАСЧЁТ ЗАЛОГА (USD + $DEPO) =====
+        document.getElementById('loanAmount').addEventListener('input', function() {
+            const amount = parseFloat(this.value) || 0;
+            
+            const collateralUsd = amount / 2;
+            const depoPrice = 0.01;
+            const collateralDepo = collateralUsd / depoPrice;
+            
+            const formattedUsd = '$' + collateralUsd.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            const formattedDepo = Math.floor(collateralDepo).toLocaleString();
+            
+            document.getElementById('collateralUsd').textContent = formattedUsd;
+            document.getElementById('collateralDepo').textContent = formattedDepo;
+            
+            document.getElementById('collateralUsdHidden').value = formattedUsd;
+            document.getElementById('collateralDepoHidden').value = formattedDepo;
+            
+            const swapUrl = 'https://jup.ag/swap/SOL-DEPO?amount=' + Math.floor(collateralDepo);
+            document.getElementById('swapDepoBtn').href = swapUrl;
+        });
+
+        // ===== КАЛЬКУЛЯТОР ЗАЛОГА =====
+        document.getElementById('collateralCalcBtn').addEventListener('click', function() {
+            const amount = parseFloat(document.getElementById('collateralAmount').value);
+            const loanType = document.getElementById('loanType').value;
+
+            if (isNaN(amount) || amount < 100) {
+                alert('Please enter a valid amount (min $100).');
+                return;
+            }
+
+            const maxCredit = amount * 2;
+            document.getElementById('maxCredit').textContent = '$' + maxCredit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            if (loanType === 'credit') {
+                document.getElementById('loanDetails').textContent = '2× leverage · 36% APR · 15 days approval · 10 days disbursement';
+            } else {
+                document.getElementById('loanDetails').textContent = '2× leverage · 0% APR · 60 banking days approval · 30 banking days disbursement';
+            }
+        });
+
+        // ===== ПОДКЛЮЧЕНИЕ PHANTOM =====
+        let walletAddress = null;
+
+        document.getElementById('connectWalletBtn').addEventListener('click', async function() {
+            try {
+                if (!window.solana || !window.solana.isPhantom) {
+                    alert('Please install Phantom wallet: https://phantom.app/');
+                    window.open('https://phantom.app/', '_blank');
+                    return;
+                }
+
+                const response = await window.solana.connect();
+                walletAddress = response.publicKey.toString();
+                
+                document.getElementById('walletAddress').textContent = walletAddress.slice(0, 6) + '...' + walletAddress.slice(-4);
+                document.getElementById('walletIndicator').style.background = '#4ade80';
+                document.getElementById('connectWalletBtn').textContent = 'Connected ✓';
+                document.getElementById('connectWalletBtn').style.background = '#2a3450';
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').textContent = 'Submit Application';
+                document.getElementById('walletHash').value = walletAddress;
+            } catch (error) {
+                console.error('Connection error:', error);
+                alert('Failed to connect wallet. Please try again.');
+            }
+        });
+
+        // ===== ОТПРАВКА ЗАЯВКИ =====
+        document.getElementById('creditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!walletAddress) {
+                document.getElementById('formStatus').textContent = '❌ Please connect your wallet first.';
+                document.getElementById('formStatus').style.color = '#ff6b6b';
+                return;
+            }
+
+            const loanAmount = document.getElementById('loanAmount').value;
+            const collateralUsd = document.getElementById('collateralUsdHidden').value;
+            const collateralDepo = document.getElementById('collateralDepoHidden').value;
+            const term = document.getElementById('loanTerm').value;
+            const purpose = document.getElementById('loanPurpose').value;
+            const email = document.getElementById('userEmail').value;
+
+            if (!loanAmount || loanAmount < 5000) {
+                document.getElementById('formStatus').textContent = '❌ Minimum loan amount is $5,000.';
+                document.getElementById('formStatus').style.color = '#ff6b6b';
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                document.getElementById('formStatus').textContent = '❌ Please enter a valid email address.';
+                document.getElementById('formStatus').style.color = '#ff6b6b';
+                return;
+            }
+
+            const form = document.getElementById('creditForm');
+            const formData = new FormData(form);
+            formData.append('Collateral USD', collateralUsd);
+            formData.append('Collateral DEPO', collateralDepo);
+            formData.append('Wallet Address', walletAddress);
+            formData.append('Status', 'Pending');
+
+            fetch('https://formspree.io/f/xrpglyko', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('formStatus').textContent = '✅ Application submitted! Check your email for confirmation.';
+                    document.getElementById('formStatus').style.color = '#4ade80';
+                    form.reset();
+                    document.getElementById('collateralUsd').textContent = '$0.00';
+                    document.getElementById('collateralDepo').textContent = '0';
+                    document.getElementById('submitBtn').disabled = true;
+                    document.getElementById('submitBtn').textContent = 'Submitted ✓';
+                } else {
+                    document.getElementById('formStatus').textContent = '❌ Submission failed. Please try again.';
+                    document.getElementById('formStatus').style.color = '#ff6b6b';
+                }
+            }).catch(error => {
+                document.getElementById('formStatus').textContent = '❌ Error: ' + error.message;
+                document.getElementById('formStatus').style.color = '#ff6b6b';
+            });
+
+            const applicationData = {
+                id: 'CREDIT-' + Date.now(),
+                timestamp: new Date().toISOString(),
+                loanAmount: parseFloat(loanAmount),
+                collateralUsd: collateralUsd,
+                collateralDepo: parseInt(collateralDepo.replace(/,/g, '')),
+                term: parseInt(term),
+                purpose: purpose,
+                email: email,
+                wallet: walletAddress,
+                status: 'pending'
+            };
+            let applications = JSON.parse(localStorage.getItem('credit_applications') || '[]');
+            applications.push(applicationData);
+            localStorage.setItem('credit_applications', JSON.stringify(applications));
+        });
+
+        // ===== АВТОЗАПУСК КАЛЬКУЛЯТОРОВ =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const event = new Event('input');
+            document.getElementById('loanAmount').dispatchEvent(event);
+            document.getElementById('collateralCalcBtn').click();
+        });
+
         // ===== ЯЗЫКОВОЙ ПЕРЕКЛЮЧАТЕЛЬ =====
         document.querySelectorAll('.lang-switch button').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -442,33 +1398,6 @@
                 this.classList.add('active');
                 alert('Language switched to: ' + this.textContent + ' (demo)');
             });
-        });
-
-        // ===== ФОРМА ЗАЯВКИ =====
-        document.getElementById('creditForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const wallet = document.getElementById('walletHash').value.trim();
-            const balance = parseFloat(document.getElementById('tokenBalance').value);
-
-            if (!wallet || wallet.length < 20) {
-                document.getElementById('formStatus').textContent = '❌ Please enter a valid Solana wallet address.';
-                document.getElementById('formStatus').style.color = '#ff6b6b';
-                return;
-            }
-            if (isNaN(balance) || balance < 10000) {
-                document.getElementById('formStatus').textContent = '❌ Minimum 10,000 $DEPO required.';
-                document.getElementById('formStatus').style.color = '#ff6b6b';
-                return;
-            }
-
-            document.getElementById('formStatus').textContent = '⏳ Verifying on-chain balance...';
-            document.getElementById('formStatus').style.color = '#60a5fa';
-
-            setTimeout(() => {
-                document.getElementById('formStatus').textContent = '✅ Application submitted successfully! You will receive a confirmation within 24 hours.';
-                document.getElementById('formStatus').style.color = '#4ade80';
-                document.getElementById('creditForm').reset();
-            }, 2500);
         });
     </script>
 </body>
