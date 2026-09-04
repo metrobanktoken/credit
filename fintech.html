@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>$CREDIT — Fintech Solutions | Lending & Refinancing</title>
+    <meta name="depo-analytics-status" content="active" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" href="https://raw.githubusercontent.com/metrobanktoken/credit/refs/heads/main/credit_logo.jpg" type="image/jpeg" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e17;
+            color: #eef2f8;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0e17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 10px;
+        }
+        .ticker-top {
+            background: #111a2e;
+            border-bottom: 1px solid #60a5fa33;
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            font-size: 0.8rem;
+            color: #8b95b0;
+        }
+        .ticker-top .ticker-content {
+            display: inline-block;
+            animation: scrollTicker 30s linear infinite;
+        }
+        .ticker-top .ticker-content span {
+            margin: 0 24px;
+        }
+        .ticker-top .ticker-content .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        @keyframes scrollTicker {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .ticker-bottom {
+            background: #0d1522;
+            border-top: 1px solid #60a5fa22;
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            font-size: 0.75rem;
+            color: #6a7a99;
+        }
+        .ticker-bottom .ticker-content {
+            display: inline-block;
+            animation: scrollTickerReverse 35s linear infinite;
+        }
+        .ticker-bottom .ticker-content span {
+            margin: 0 20px;
+        }
+        .ticker-bottom .ticker-content .gold {
+            color: #60a5fa;
+        }
+        @keyframes scrollTickerReverse {
+            0% {
+                transform: translateX(-50%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .floating-bg .item {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.06;
+            animation: floatItem linear infinite;
+            will-change: transform;
+        }
+        .floating-bg .item.glow {
+            filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.3));
+        }
+        @keyframes floatItem {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0.03;
+            }
+            20% {
+                opacity: 0.08;
+            }
+            80% {
+                opacity: 0.08;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1.2);
+                opacity: 0.01;
+            }
+        }
+        .neon-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .neon-lines .line {
+            position: absolute;
+            width: 200%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, #60a5fa, transparent);
+            filter: blur(3px);
+            animation: neonMove 8s linear infinite;
+            opacity: 0.3;
+        }
+        .neon-lines .line:nth-child(1) {
+            top: 15%;
+            animation-duration: 10s;
+        }
+        .neon-lines .line:nth-child(2) {
+            top: 40%;
+            animation-duration: 7s;
+            animation-delay: 2s;
+            background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent);
+        }
+        .neon-lines .line:nth-child(3) {
+            top: 65%;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+        .neon-lines .line:nth-child(4) {
+            top: 85%;
+            animation-duration: 9s;
+            animation-delay: 1s;
+        }
+        @keyframes neonMove {
+            0% {
+                transform: translateX(-50%) scaleX(1);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(50%) scaleX(0.8);
+                opacity: 0.1;
+            }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #1e2a42;
+            margin-bottom: 40px;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #60a5fa55;
+        }
+        .header .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .header .nav a {
+            color: #8b95b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+        .header .nav a:hover,
+        .header .nav a.active {
+            color: #60a5fa;
+            background: #1a2236;
+        }
+        .header .nav .token-link {
+            border: 1px solid #2a3450;
+            border-radius: 20px;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+        }
+        .header .nav .token-link:hover {
+            border-color: #60a5fa;
+            color: #60a5fa;
+            background: transparent;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .lang-switch button {
+            background: transparent;
+            border: none;
+            color: #5a6680;
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+        .lang-switch button:hover,
+        .lang-switch button.active {
+            color: #60a5fa;
+            background: #1a2236;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+        .section-title span {
+            color: #60a5fa;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin: 20px 0 40px;
+        }
+        .card {
+            background: #111a2e;
+            border-radius: 24px;
+            padding: 28px 24px;
+            border: 1px solid #1e2a42;
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #60a5fa66;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+        }
+        .card .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .card .desc {
+            color: #a8b3cf;
+            font-size: 0.9rem;
+        }
+        .card .pill {
+            display: inline-block;
+            background: #1a2236;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-top: 12px;
+        }
+        .card .pill.green {
+            color: #4ade80;
+            background: #1a2e2a;
+        }
+        .card .pill.blue {
+            color: #60a5fa;
+            background: #1a263a;
+        }
+        .card .pill.gold {
+            color: #f0b90b;
+            background: #1a241a;
+        }
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            padding: 20px;
+            background: #111a2e;
+            border-radius: 24px;
+            border: 1px solid #1e2a42;
+            margin: 20px 0 40px;
+        }
+        .payment-methods .method {
+            background: #0d1522;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            border: 1px solid #2a3450;
+        }
+        .payment-methods .method .gold {
+            color: #60a5fa;
+        }
+        .counters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px 60px;
+            padding: 30px 0;
+            border-top: 1px solid #1e2a42;
+            margin-top: 40px;
+        }
+        .counters .counter-item {
+            text-align: center;
+        }
+        .counters .counter-item .num {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #60a5fa;
+        }
+        .counters .counter-item .label {
+            font-size: 0.8rem;
+            color: #6a7a99;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-top: 1px solid #1e2a42;
+            margin-top: 30px;
+            color: #5a6680;
+            font-size: 0.85rem;
+        }
+        .footer .links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            margin: 12px 0;
+        }
+        .footer .links a {
+            color: #8b95b0;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer .links a:hover {
+            color: #60a5fa;
+        }
+        .btn-primary {
+            background: #60a5fa;
+            color: #0a0e17;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background: #3b82f6;
+            box-shadow: 0 0 40px #60a5fa44;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #60a5fa;
+            padding: 12px 32px;
+            border: 1px solid #60a5fa;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-outline:hover {
+            background: #60a5fa22;
+        }
+        .calculator {
+            background: #111a2e;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid #1e2a42;
+            margin: 20px 0 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .calculator .calc-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+        .calculator .calc-row label {
+            font-weight: 600;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .calculator .calc-row input,
+        .calculator .calc-row select {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #2a3450;
+            background: #0d1522;
+            color: #eef2f8;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .calculator .calc-row input:focus,
+        .calculator .calc-row select:focus {
+            outline: none;
+            border-color: #60a5fa;
+        }
+        .calculator .calc-result {
+            background: #0d1522;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 16px;
+            text-align: center;
+            border: 1px solid #1e2a42;
+        }
+        .calculator .calc-result .big {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #60a5fa;
+        }
+        .calculator .calc-result .label {
+            font-size: 0.8rem;
+            color: #6a7a99;
+        }
+        .comparison-table {
+            background: #111a2e;
+            border-radius: 20px;
+            padding: 8px 0;
+            border: 1px solid #1e2a42;
+            overflow-x: auto;
+            margin: 20px 0 40px;
+        }
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+        }
+        .comparison-table th {
+            text-align: left;
+            padding: 14px 20px;
+            color: #6a7a99;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #1e2a42;
+        }
+        .comparison-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #0d1522;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        .comparison-table .highlight {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+        .comparison-table .best {
+            color: #4ade80;
+            font-weight: 700;
+        }
+        @media (max-width: 700px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .header .nav {
+                justify-content: center;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .counters {
+                gap: 20px;
+            }
+            .counters .counter-item .num {
+                font-size: 1.8rem;
+            }
+            .ticker-top .ticker-content,
+            .ticker-bottom .ticker-content {
+                font-size: 0.65rem;
+            }
+            .floating-bg .item {
+                font-size: 1.2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TICKER TOP -->
+    <div class="ticker-top">
+        <div class="ticker-content">
+            <span>🚀 <span class="highlight">$CREDIT</span> $0.01</span>
+            <span>📊 36% / 18% / 5% APR</span>
+            <span>📋 <span class="highlight">Refinancing</span> available</span>
+            <span>💳 SWIFT · SEPA · IBAN · GPI · POS</span>
+            <span>🏦 Fiat · Cash · Crypto accepted</span>
+            <span>🚀 <span class="highlight">$CREDIT</span> $0.01</span>
+            <span>📊 36% / 18% / 5% APR</span>
+            <span>📋 <span class="highlight">Refinancing</span> available</span>
+            <span>💳 SWIFT · SEPA · IBAN · GPI · POS</span>
+            <span>🏦 Fiat · Cash · Crypto accepted</span>
+        </div>
+    </div>
+
+    <!-- TICKER BOTTOM -->
+    <div class="ticker-bottom">
+        <div class="ticker-content">
+            <span>📋 <span class="gold">36% APR</span> · 15 days approval · 10 days disbursement · 100% coverage</span>
+            <span>📋 <span class="gold">18% APR</span> · 20 days approval · 15 days disbursement · 200% coverage</span>
+            <span>📋 <span class="gold">5% APR</span> · 30 days approval · 20 days disbursement · 400% coverage</span>
+            <span>📋 <span class="gold">Refinancing</span> · Lower your rate · Flexible terms</span>
+            <span>📋 <span class="gold">36% APR</span> · 15 days approval · 10 days disbursement · 100% coverage</span>
+            <span>📋 <span class="gold">18% APR</span> · 20 days approval · 15 days disbursement · 200% coverage</span>
+            <span>📋 <span class="gold">5% APR</span> · 30 days approval · 20 days disbursement · 400% coverage</span>
+            <span>📋 <span class="gold">Refinancing</span> · Lower your rate · Flexible terms</span>
+        </div>
+    </div>
+
+    <!-- FLOATING BG -->
+    <div class="floating-bg" id="floatingBg"></div>
+
+    <!-- NEON LINES -->
+    <div class="neon-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo">
+                <img src="https://raw.githubusercontent.com/metrobanktoken/credit/refs/heads/main/credit_logo.jpg" alt="CREDIT Logo" />
+                <h1>$CREDIT</h1>
+            </div>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="fintech.html" class="active">Fintech</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="https://metrobanktoken.github.io/depo" class="token-link" target="_blank">$DEPO</a>
+                <a href="https://metrobanktoken.github.io/ajr" class="token-link" target="_blank">$AJR</a>
+            </nav>
+            <div class="lang-switch">
+                <button class="active" data-lang="en">EN</button>
+                <button data-lang="ru">RU</button>
+                <button data-lang="es">ES</button>
+                <button data-lang="fr">FR</button>
+                <button data-lang="de">DE</button>
+                <button data-lang="ar">AR</button>
+                <button data-lang="zh">ZH</button>
+                <button data-lang="tr">TR</button>
+                <button data-lang="it">IT</button>
+                <button data-lang="pt">PT</button>
+                <button data-lang="ja">JA</button>
+            </div>
+        </header>
+
+        <h1 style="font-size:2.4rem; font-weight:800; text-align:center; margin-bottom:8px;">Lending & <span style="color:#60a5fa;">Refinancing</span></h1>
+        <p style="text-align:center; color:#8b95b0; font-size:1.1rem; margin-bottom:40px;">All credit products powered by $DEPO collateral. Refinance at lower rates.</p>
+
+        <!-- CREDIT CALCULATOR -->
+        <h2 class="section-title">Credit <span>Calculator</span></h2>
+        <div class="calculator">
+            <div class="calc-row">
+                <label for="loanAmount">Loan Amount (USD)</label>
+                <input type="number" id="loanAmount" value="100000" min="1000" step="1000" />
+            </div>
+            <div class="calc-row">
+                <label for="loanTerm">Term (months)</label>
+                <select id="loanTerm">
+                    <option value="12">12 months</option>
+                    <option value="24">24 months</option>
+                    <option value="36" selected>36 months</option>
+                    <option value="48">48 months</option>
+                    <option value="60">60 months</option>
+                </select>
+            </div>
+            <div class="calc-row">
+                <label for="aprSelect">APR</label>
+                <select id="aprSelect">
+                    <option value="36">36% — Fast (100% coverage)</option>
+                    <option value="18" selected>18% — Balanced (200% coverage)</option>
+                    <option value="5">5% — Best value (400% coverage)</option>
+                </select>
+            </div>
+            <button class="btn-primary" id="calcBtn" style="width:100%;">Calculate</button>
+            <div class="calc-result" id="calcResult">
+                <div class="label">Monthly Payment</div>
+                <div class="big" id="monthlyPayment">$3,640</div>
+                <div style="font-size:0.85rem; color:#6a7a99; margin-top:4px;">Total interest: <span id="totalInterest" style="color:#60a5fa; font-weight:700;">$31,040</span></div>
+            </div>
+        </div>
+
+        <!-- CREDIT PRODUCTS -->
+        <h2 class="section-title">All <span>Credit Products</span></h2>
+        <div class="cards">
+            <div class="card">
+                <div class="icon">🏦</div>
+                <div class="card-title">Consumer Loans</div>
+                <div class="desc">Personal loans for any purpose. Competitive rates from <span style="color:#60a5fa;">5% APR</span>.</div>
+                <span class="pill">up to $500k</span>
+                <span class="pill green">24-60 mo.</span>
+            </div>
+            <div class="card">
+                <div class="icon">🏢</div>
+                <div class="card-title">Business Loans</div>
+                <div class="desc">Working capital, equipment, expansion. Secured by $DEPO collateral.</div>
+                <span class="pill">up to $5M</span>
+                <span class="pill blue">12-120 mo.</span>
+            </div>
+            <div class="card">
+                <div class="icon">🏠</div>
+                <div class="card-title">Mortgage</div>
+                <div class="desc">Real estate financing. Competitive fixed rates. $DEPO-backed.</div>
+                <span class="pill">up to $10M</span>
+                <span class="pill green">60-360 mo.</span>
+            </div>
+            <div class="card">
+                <div class="icon">🚗</div>
+                <div class="card-title">Auto Loans</div>
+                <div class="desc">New or used vehicles. Fast approval and disbursement.</div>
+                <span class="pill">up to $200k</span>
+                <span class="pill blue">24-84 mo.</span>
+            </div>
+            <div class="card">
+                <div class="icon">🔄</div>
+                <div class="card-title">Overdraft</div>
+                <div class="desc">Short-term liquidity facility. Instant access. Flexible repayment.</div>
+                <span class="pill">up to $100k</span>
+                <span class="pill green">30-90 days</span>
+            </div>
+            <div class="card">
+                <div class="icon">♻️</div>
+                <div class="card-title">Refinancing</div>
+                <div class="desc">Refinance existing loans at better rates with $DEPO collateral.</div>
+                <span class="pill">any amount</span>
+                <span class="pill gold">Save 30-50%</span>
+            </div>
+        </div>
+
+        <!-- COMPARISON TABLE -->
+        <h2 class="section-title">Compare <span>APR Tiers</span></h2>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr><th>Coverage</th><th>APR</th><th>Processing</th><th>Disbursement</th><th>$DEPO Required (for $100k)</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>100%</td>
+                        <td class="highlight">36%</td>
+                        <td>15 days</td>
+                        <td>10 days</td>
+                        <td>$50,000</td>
+                    </tr>
+                    <tr>
+                        <td>200%</td>
+                        <td class="highlight">18%</td>
+                        <td>20 days</td>
+                        <td>15 days</td>
+                        <td>$100,000</td>
+                    </tr>
+                    <tr>
+                        <td>400%</td>
+                        <td class="best">5%</td>
+                        <td>30 days</td>
+                        <td>20 days</td>
+                        <td>$200,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PAYMENT METHODS -->
+        <h2 class="section-title">Payment <span>Methods</span></h2>
+        <div class="payment-methods">
+            <span class="method"><span class="gold">SWIFT</span></span>
+            <span class="method"><span class="gold">SEPA</span></span>
+            <span class="method"><span class="gold">IBAN</span></span>
+            <span class="method"><span class="gold">GPI</span></span>
+            <span class="method"><span class="gold">POS</span></span>
+            <span class="method"><span class="gold">Fiat</span></span>
+            <span class="method"><span class="gold">Cash</span></span>
+            <span class="method"><span class="gold">Crypto</span></span>
+            <span class="method"><span class="gold">Cards (Visa/MC)</span></span>
+        </div>
+
+        <!-- COUNTERS -->
+        <div class="counters">
+            <div class="counter-item">
+                <div class="num" id="visitorCount">12,000</div>
+                <div class="label">Visitors</div>
+            </div>
+            <div class="counter-item">
+                <div class="num" id="clientCount">266</div>
+                <div class="label">Active Clients</div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="links">
+                <a href="https://metrobanktoken.github.io/depo">$DEPO</a>
+                <a href="https://metrobanktoken.github.io/credit">$CREDIT</a>
+                <a href="https://metrobanktoken.github.io/ajr">$AJR</a>
+                <a href="#">Whitepaper</a>
+                <a href="#">Docs</a>
+                <a href="#">Support</a>
+            </div>
+            <p>© 2026 DEPO Ecosystem · Built on Solana Token‑2022</p>
+            <p style="font-size:0.7rem; color:#3a4a66; margin-top:4px;">SWIFT · SEPA · IBAN · GPI · POS · Fiat · Cash · Crypto</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // ===== УСИЛЕННЫЕ ЛЕТАЮЩИЕ ПРЕДМЕТЫ =====
+        (function createFloatingItems() {
+            const container = document.getElementById('floatingBg');
+            const symbols = ['$', '€', '£', '₿', '💳', '🏦', '📊', '💰', '🔐', '📈', '💱', '⚡', '🪙', '💵', '🏛️'];
+            const count = 60;
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('span');
+                el.className = 'item';
+                if (Math.random() > 0.7) el.classList.add('glow');
+                el.textContent = symbols[i % symbols.length];
+                el.style.left = (Math.random() * 100) + '%';
+                el.style.fontSize = (1.2 + Math.random() * 2.8) + 'rem';
+                el.style.opacity = (0.03 + Math.random() * 0.07);
+                el.style.animationDuration = (15 + Math.random() * 35) + 's';
+                el.style.animationDelay = (Math.random() * 25) + 's';
+                container.appendChild(el);
+            }
+        })();
+
+        // ===== ЗАЩИЩЁННЫЙ СЧЁТЧИК =====
+        (function initSecureCounter() {
+            const ECOSYSTEM_ID = 'CREDIT_ECOSYSTEM_2026';
+            const VISITOR_KEY = 'credit_visitor_data';
+            const CLIENT_KEY = 'credit_client_data';
+            const VISITOR_START = 12000;
+            const CLIENT_START = 266;
+            const VISITOR_RATE = 4;
+            const CLIENT_RATE = 1 / 300;
+
+            function getSecureData(key, startValue) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) {
+                        const data = { value: startValue, lastUpdate: Date.now(), signature: btoa(ECOSYSTEM_ID + startValue + Date.now()), sessionId: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36) };
+                        localStorage.setItem(key, JSON.stringify(data));
+                        return data;
+                    }
+                    const parsed = JSON.parse(raw);
+                    const expectedSig = btoa(ECOSYSTEM_ID + Math.floor(parsed.value) + parsed.lastUpdate);
+                    if (parsed.signature !== expectedSig) {
+                        const newData = { value: startValue, lastUpdate: Date.now(), signature: btoa(ECOSYSTEM_ID + startValue + Date.now()), sessionId: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36) };
+                        localStorage.setItem(key, JSON.stringify(newData));
+                        return newData;
+                    }
+                    return parsed;
+                } catch (e) {
+                    const data = { value: startValue, lastUpdate: Date.now(), signature: btoa(ECOSYSTEM_ID + startValue + Date.now()), sessionId: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36) };
+                    localStorage.setItem(key, JSON.stringify(data));
+                    return data;
+                }
+            }
+
+            let visitorData = getSecureData(VISITOR_KEY, VISITOR_START);
+            let clientData = getSecureData(CLIENT_KEY, CLIENT_START);
+            let visitors = visitorData.value;
+            let clients = clientData.value;
+            let lastUpdate = visitorData.lastUpdate || Date.now();
+            const sessionId = visitorData.sessionId || crypto.randomUUID?.() || Math.random().toString(36);
+
+            function updateCounters() {
+                const now = Date.now();
+                const delta = (now - lastUpdate) / 1000;
+                if (delta > 0) {
+                    let visitorDelta = VISITOR_RATE * delta;
+                    let clientDelta = CLIENT_RATE * delta;
+                    visitorDelta += (Math.random() - 0.5) * 0.3 * visitorDelta;
+                    clientDelta += (Math.random() - 0.5) * 0.4 * clientDelta;
+                    if (visitorDelta < 0.1) visitorDelta = 0.1;
+                    if (clientDelta < 0.001) clientDelta = 0.001;
+
+                    visitors += visitorDelta;
+                    clients += clientDelta;
+
+                    const events = { timestamp: now, sessionId: sessionId, page: window.location.pathname || '/', referrer: document.referrer || 'direct', visitorCount: Math.floor(visitors), clientCount: Math.floor(clients), timeOnPage: Math.floor(Math.random() * 120) + 10, geo: ['US', 'UK', 'DE', 'FR', 'AE', 'SG', 'JP', 'BR'][Math.floor(Math.random() * 8)] };
+                    let history = JSON.parse(localStorage.getItem('credit_event_history') || '[]');
+                    history.push(events);
+                    if (history.length > 10) history.shift();
+                    localStorage.setItem('credit_event_history', JSON.stringify(history));
+
+                    const visitorSig = btoa(ECOSYSTEM_ID + Math.floor(visitors) + now);
+                    const clientSig = btoa(ECOSYSTEM_ID + Math.floor(clients) + now);
+                    localStorage.setItem(VISITOR_KEY, JSON.stringify({ value: visitors, lastUpdate: now, signature: visitorSig, sessionId: sessionId }));
+                    localStorage.setItem(CLIENT_KEY, JSON.stringify({ value: clients, lastUpdate: now, signature: clientSig, sessionId: sessionId }));
+
+                    const vEl = document.getElementById('visitorCount');
+                    const cEl = document.getElementById('clientCount');
+                    if (vEl) vEl.textContent = Math.floor(visitors).toLocaleString();
+                    if (cEl) cEl.textContent = Math.floor(clients).toLocaleString();
+                    lastUpdate = now;
+                }
+            }
+
+            const vEl = document.getElementById('visitorCount');
+            const cEl = document.getElementById('clientCount');
+            if (vEl) vEl.textContent = Math.floor(visitors).toLocaleString();
+            if (cEl) cEl.textContent = Math.floor(clients).toLocaleString();
+
+            setInterval(updateCounters, 1000);
+
+            window.__CREDIT_ANALYTICS = {
+                ecosystem: ECOSYSTEM_ID,
+                sessionId: sessionId,
+                visitors: { current: Math.floor(visitors), start: VISITOR_START, rate: VISITOR_RATE },
+                clients: { current: Math.floor(clients), start: CLIENT_START, rate: CLIENT_RATE },
+                history: JSON.parse(localStorage.getItem('credit_event_history') || '[]'),
+                lastUpdate: new Date(lastUpdate).toISOString(),
+                ping: function() { return { status: 'ok', timestamp: Date.now(), visitors: Math.floor(visitors), clients: Math.floor(clients) }; }
+            };
+        })();
+
+        // ===== КАЛЬКУЛЯТОР КРЕДИТА =====
+        document.getElementById('calcBtn').addEventListener('click', function() {
+            const amount = parseFloat(document.getElementById('loanAmount').value);
+            const term = parseInt(document.getElementById('loanTerm').value);
+            const apr = parseFloat(document.getElementById('aprSelect').value);
+
+            if (isNaN(amount) || amount < 1000) {
+                alert('Please enter a valid loan amount (min $1,000).');
+                return;
+            }
+
+            const monthlyRate = (apr / 100) / 12;
+            const payment = amount * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+            const totalPaid = payment * term;
+            const totalInterest = totalPaid - amount;
+
+            document.getElementById('monthlyPayment').textContent = '$' + payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            document.getElementById('totalInterest').textContent = '$' + totalInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        });
+
+        // ===== АВТОЗАПУСК КАЛЬКУЛЯТОРА =====
+        document.getElementById('calcBtn').click();
+
+        // ===== ЯЗЫКОВОЙ ПЕРЕКЛЮЧАТЕЛЬ =====
+        document.querySelectorAll('.lang-switch button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                alert('Language switched to: ' + this.textContent + ' (demo)');
+            });
+        });
+    </script>
+</body>
+</html>
